@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  .main-content
+    h1 Welcome to Edison's Club Directory!
+    p Explore all the amazing student organizations on campus.
+
+    .clubs-container
+      each club in clubs
+        .club-card(data-id=club.id)
+          .card-info
+            .card-logo
+              // FIXED: Now uses club.logo from data instead of hardcoded placeholder
+              img(
+                src=club.logo || '/images/logo-placeholder.png',
+                alt=`${club.name} Logo`,
+                onerror="this.src='/images/Edison.png';"
+              )
+            h2= club.name
+            p.meeting Location: #{club.location || 'TBD'}
+            p.meeting Meeting: #{club.meeting}
+            p.short= club.shortDesc
+            p.commitment Commitment: #{club.commitment || 'TBD'}
+            p.advisor Advisor: #{club.advisor || 'TBD'}
+            p.officers Officers: #{club.officers || 'TBD'}
+
+  // Modal Overlay + Popup
+  // FIXED: Added inline style to hide by default
+  div#modal-overlay.modal-overlay(style="display:none;")
+  div#club-modal.modal(style="display:none;")
+    // Banner area
+    div.modal-banner
+      // FIXED: Using Edison.png as fallback since banner-placeholder doesn't exist
+      img#modal-banner(src='/images/Edison.png', alt='Club Banner')
+    div.modal-content
+      span#close-btn &times;
+      h2#modal-name
+      p#modal-shortdesc
+      p#modal-location
+      p#modal-meeting
+      p#modal-commitment
+      p#modal-advisor
+      p#modal-officers
+      // FIXED: Changed from # to javascript:void(0)
+      a#modal-more(href="javascript:void(0);") More Info →
+
+  // FIXED: Pass club data to JavaScript (THIS WAS MISSING!)
+  script.
+    window.clubsData = !{JSON.stringify(clubs)};

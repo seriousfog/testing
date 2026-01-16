@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    script(type='text/javascript' src='/javascripts/clubNews.js')
+    title= title || "Edison High School Clubs"
+    link(rel="stylesheet", href="/stylesheets/style.css")
+  body
+    //- --- Header / Nav ---
+    header.main-header
+      div.logo
+        img(src="/images/Edison.png", alt="Logo")
+      nav.main-nav
+        a(href="/") Home
+        a(href="#") About
+        a(href="#") Contact
+
+    main
+      block content
+    script(src='/javascripts/scripts/main.js')

@@ -1,0 +1,697 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* HEADER / NAV BAR */
+header.main-header {
+  margin: 0;
+  padding: 0 30px;
+  box-sizing: border-box;
+  background-color: #f7a602;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Styling */
+header.main-header .logo img {
+  height: 60px;
+  width: auto;
+}
+
+/* Navigation Links */
+nav.main-nav {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+nav.main-nav a {
+  color: #1a1a1a;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+nav.main-nav a:hover {
+  color: white;
+}
+
+/* MAIN CONTENT WRAPPER */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.main-content h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+.main-content > p {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+/* CLUBS GRID */
+.clubs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* CLUB CARD */
+.club-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.club-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Info Section */
+.card-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Card Logo */
+.card-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.card-logo img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f7a602;
+}
+
+/* Card Text */
+.card-info h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.card-info p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.card-info p.short {
+  font-style: italic;
+  color: #777;
+  margin-top: 5px;
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 998;
+  backdrop-filter: blur(3px); /* Modern browsers: adds blur effect */
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 700px;
+  min-width: 350px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  overflow: hidden;
+  max-height: 90vh; /* Prevent modal from being taller than viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modal Banner */
+.modal-banner {
+  width: 100%;
+  min-height: 40%;
+  max-height: 45%;
+  overflow: hidden;
+  background-color: #f0f0f0; /* Fallback if image doesn't load */
+}
+
+.modal-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Modal Content */
+.modal-content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto; /* Allow scrolling if content is too tall */
+}
+
+.modal-content h2 {
+  margin: 0 0 10px 0;
+  color: #1a1a1a;
+  font-size: 24px;
+}
+
+.modal-content p {
+  margin: 5px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Close Button */
+#close-btn {
+  align-self: flex-end;
+  cursor: pointer;
+  font-size: 32px;
+  font-weight: bold;
+  color: #666;
+  transition: color 0.2s;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+#close-btn:hover {
+  color: #f7a602;
+}
+
+/* More Info Button */
+#modal-more {
+  align-self: flex-end;
+  margin-top: 15px;
+  background: #f7a602;
+  color: #1a1a1a;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+#modal-more:hover {
+  background: #1a1a1a;
+  color: white;
+  transform: translateX(3px); /* Subtle slide effect */
+}
+
+/* INDIVIDUAL CLUB PAGE */
+.club-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Club Banner */
+.club-banner {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.club-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Club Info Section */
+.club-info {
+  padding: 30px;
+}
+
+/* Club Header with Logo */
+.club-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f7a602;
+}
+
+.club-logo-large img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f7a602;
+}
+
+.club-header h1 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 32px;
+}
+
+.club-header .tagline {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-style: italic;
+}
+
+/* Detail Cards Grid */
+.club-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.detail-card {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #f7a602;
+}
+
+.detail-card h3 {
+  margin: 0 0 10px 0;
+  color: #1a1a1a;
+  font-size: 18px;
+}
+
+.detail-card p {
+  margin: 5px 0;
+  color: #555;
+}
+
+/* Description Section */
+.club-description {
+  margin-bottom: 30px;
+}
+
+.club-description h2 {
+  color: #1a1a1a;
+  margin-bottom: 15px;
+}
+
+.club-description p {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Gallery Section */
+.club-gallery {
+  margin-bottom: 30px;
+}
+
+.club-gallery h2 {
+  color: #1a1a1a;
+  margin-bottom: 15px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* Back Button */
+.back-button-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.back-btn {
+  display: inline-block;
+  background: #f7a602;
+  color: #1a1a1a;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background: #1a1a1a;
+  color: white;
+  transform: translateX(-3px);
+}
+
+/* RESPONSIVE DESIGN res*/
+@media (max-width: 768px) {
+  header.main-header {
+    padding: 0 15px;
+    height: 70px;
+  }
+
+  header.main-header .logo img {
+    height: 50px;
+  }
+
+  nav.main-nav {
+    gap: 15px;
+  }
+
+  nav.main-nav a {
+    font-size: 16px;
+  }
+
+  .clubs-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .modal {
+    width: 95%;
+    min-width: unset;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  /* Individual Club Page Mobile */
+  .club-banner {
+    height: 200px;
+  }
+
+  .club-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .club-header h1 {
+    font-size: 24px;
+  }
+
+  .club-details {
+    grid-template-columns: 1fr;
+  }
+
+  .club-info {
+    padding: 20px;
+  }
+}
+
+
+/* Brookylen Code */
+body1 {
+  padding: 0;
+  margin: 0;
+  background: blanchedalmond;
+  font-family: inter-variable, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.clubofficer-content1 {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 50px;
+}
+
+.officercontent1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1440px;
+}
+
+.knowcontent1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1440px;
+}
+
+.container1 {
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: -40px;
+  position: relative;
+}
+
+.content-container1 {
+  background: white;
+  border-radius: 12px;
+  margin-top: 45px;
+}
+
+.club-content1 {
+  padding-left: 150px;
+  padding-bottom: 50px;
+}
+
+.club-card-header-image1 {
+  margin-top: 2%;
+  width: 250px;
+  height: 240px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 2px rgba(0,0,0,0.5);
+}
+
+.clubname1 {
+  position: absolute;
+  font-size: 219%;
+  color: #5c5454;
+  font-weight: 700;
+  left: 445px;
+  top: 150px;
+}
+
+.tags1 {
+  position: absolute;
+  font-size: 100%;
+  color: #5c5454;
+  font-weight: 400;
+  left: 445px;
+  top: 200px;
+  border: 2px solid black;
+  border-radius: 12px;
+}
+
+.bigdescription1 {
+  position: absolute;
+  font-size: 125%;
+  font-weight: 400;
+  left: 445px;
+  top: 250px;
+  max-width: 550px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  height: 4lh;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.room1 {
+  position: relative;
+  font-size: 115%;
+  font-weight: 500;
+  left: 295px;
+}
+
+.advisor1 {
+  position: relative;
+  font-size: 115%;
+  font-weight: 500;
+  left: 295px;
+}
+
+.border1 {
+  position: relative;
+  margin-top: -30px;
+  border: 1px solid black;
+  width: 1200px;
+}
+
+.calender1 {
+  margin-top: 50px;
+  margin-bottom: -50px;
+  width: 700px;
+  height: 350px;
+  margin-left: 180px;
+}
+
+.border21 {
+  position: relative;
+  border: 1px solid black;
+  margin-bottom: 50px;
+  margin-left: 38px;
+  width: 1400px;
+}
+
+.officers1 {
+  position: relative;
+  left: 45%;
+  margin-top: -50px;
+  margin-bottom: 75px;
+  font-size: 156.25%;
+  font-weight: 600;
+}
+
+.otitle1 {
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.officersimage1 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -25px;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+}
+
+.links1 {
+  position: relative;
+  margin-right: 20px;
+  width: 25px;
+  height: 25px;
+  left: 5px;
+  bottom: 85px;
+  border-radius: 5px;
+}
+
+.q1 {
+  font-style: oblique;
+  position: relative;
+  text-align: center;
+  font-size: 156.25%;
+  font-weight: 600;
+}
+
+.a1 {
+  position: relative;
+  padding-left: 55px;
+  padding-bottom: 50px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Shine's Code */
+.club-news {
+  background-color: #fff8cd;
+  border: 8px solid #000000;
+  margin-top: 100px;
+  margin-bottom: -200px;
+  margin-left: 100px;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px;
+  width: 30%;
+  height: 500px;
+  box-sizing: border-box;
+}
+
+.club-activities {
+  padding: 15px;
+  height: 50%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.club-opportunities {
+  border-top: 1px solid black;
+  padding: 15px;
+  height: 50%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.club-activities-heading{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formNews{
+  display: none;
+
+}
+
+.formShow{
+  display: block;
+}
+
+.formHide{
+  display: none;
+}
+
+.formNews2{
+  display: none;
+
+}
+
+.formShow2{
+  display: block;
+}
+
+.formHide2{
+  display: none;
+}
