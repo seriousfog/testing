@@ -5,6 +5,11 @@ block content
     h1 Welcome to Edison's Club Directory!
     p Explore all the student organizations on campus.
 
+    .search-bar
+      form(action="/search", method="GET")
+        input(type="text", name="q", placeholder="Search clubs...", value=searchQuery)
+        button(type="submit") Search
+
     .clubs-container
       each club in clubs
         .club-card(data-id=club.id)

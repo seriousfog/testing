@@ -1,0 +1,52 @@
+extends layout
+
+block content
+    .main-content
+        h1 Edit Club: #{club.clubname}
+
+        form.content-form(action="/clubs/" + club.id + "/edit", method="POST")
+            .form-header Club Information
+
+            .input-container
+                label.form-label Club Name:
+                input(type="text", name="clubname", value=club.clubname, required)
+
+            .input-container
+                label.form-label Advisor First Name:
+                input(type="text", name="advisorfirstname", value=club.advisorfirstname)
+
+            .input-container
+                label.form-label Advisor Last Name:
+                input(type="text", name="advisorlastname", value=club.advisorlastname)
+
+            .input-container
+                label.form-label Meeting Date/Time:
+                input(type="text", name="meetingdate", value=club.meetingdate)
+
+            .input-container
+                label.form-label Room Number:
+                input(type="text", name="clubroomnumber", value=club.clubroomnumber)
+
+            .input-container
+                label.form-label Category:
+                select(name="category")
+                    option(value="") Select Category
+                    option(value="Academic", selected=club.category==='Academic') Academic
+                    option(value="Arts", selected=club.category==='Arts') Arts
+                    option(value="Culture", selected=club.category==='Culture') Culture
+                    option(value="Entertainment", selected=club.category==='Entertainment') Entertainment
+                    option(value="Health", selected=club.category==='Health') Health
+                    option(value="Leadership", selected=club.category==='Leadership') Leadership
+                    option(value="Sports", selected=club.category==='Sports') Sports
+                    option(value="STEM", selected=club.category==='STEM') STEM
+
+            .input-container
+                label.form-label Short Description:
+                textarea(name="smalldescription", rows="3")= club.smalldescription
+
+            .club-create-form-button
+                button(type="submit") Save Changes
+                a.button-cancel(href="/clubs/" + club.id) Cancel
+
+        form(action="/clubs/" + club.id + "/delete", method="POST", style="margin-top: 20px;")
+            button(type="submit", style="background-color: #dc3545;") Delete Club

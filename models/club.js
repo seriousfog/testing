@@ -17,13 +17,24 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        clubname: DataTypes.STRING,
+        clubname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: {
+                    msg: "Club name cannot be empty"
+                }
+            }
+        },
         advisorfirstname: DataTypes.STRING,
         advisorlastname: DataTypes.STRING,
         meetingdate: DataTypes.STRING,
         clubroomnumber: DataTypes.STRING,
         category: DataTypes.STRING,
-        clublogo: DataTypes.STRING,
+        clublogo: {
+            type: DataTypes.STRING,
+            defaultValue: 'placeholder.jpg'
+        },
         smalldescription: DataTypes.TEXT,
         secondadvisorfirstname: DataTypes.STRING,
         secondadvisorlastname: DataTypes.STRING
@@ -31,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'Club',
         tableName: 'clubinfo',
-        timestamps: false
+        timestamps: false,
+        freezeTableName: true // Don't pluralize table name
     });
 
     return Club;
