@@ -83,3 +83,7 @@ router.get('/clubs/:id', async function(req, res, next) {
 });
 
 module.exports = router;
+
+const db = require('../models');
+console.log('DB exported:', Object.keys(db));
+console.log('Club model:', db.Club);

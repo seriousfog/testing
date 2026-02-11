@@ -4,7 +4,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Club extends Model {
         static associate(models) {
-            // A club has many officers
             Club.hasMany(models.Officer, {
                 foreignKey: 'clubin',
                 sourceKey: 'clubname'
@@ -18,10 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        clubname: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
+        clubname: DataTypes.STRING,
         advisorfirstname: DataTypes.STRING,
         advisorlastname: DataTypes.STRING,
         meetingdate: DataTypes.STRING,

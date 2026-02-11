@@ -9,11 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    console.log('Clubs loaded:', clubs); // Debug: check if data is loaded
+
     // SELECT ELEMENTS
     const cards = document.querySelectorAll('.club-card');
     const overlay = document.getElementById('modal-overlay');
     const modal = document.getElementById('club-modal');
     const closeBtn = document.getElementById('close-btn');
+
+    // Check if modal elements exist
+    if (!overlay || !modal) {
+        console.error('Modal elements not found in DOM');
+        return;
+    }
 
     // Modal content elements
     const modalName = document.getElementById('modal-name');
@@ -27,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalMore = document.getElementById('modal-more');
 
     // FUNCTION TO CLOSE MODAL
-    // FIXED: Created a reusable function for closing
     function closeModal() {
         modal.style.display = 'none';
         overlay.style.display = 'none';
@@ -38,30 +45,33 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => {
             // Get the club ID from the card's data attribute
             const clubId = card.dataset.id;
+            console.log('Clicked card with ID:', clubId); // Debug
 
             // Find the matching club in our data
-            const club = clubs.find(c => c.id === clubId);
+            const club = clubs.find(c => c.id == clubId);
 
             // If club not found, don't open modal
             if (!club) {
-                console.error(`Club with id "${clubId}" not found`);
+                console.error(`Club with id "${clubId}" not found in:`, clubs);
                 return;
             }
 
+            console.log('Found club:', club); // Debug
+
             // Populate modal with club information
-            modalName.textContent = club.name;
-            modalMeeting.textContent = `Meeting: ${club.meeting}`;
-            modalLocation.textContent = `Location: ${club.location || 'TBD'}`;
-            modalShortDesc.textContent = club.shortDesc;
-            modalCommitment.textContent = `Commitment: ${club.commitment || 'TBD'}`;
-            modalAdvisor.textContent = `Advisor: ${club.advisor || 'TBD'}`;
-            modalOfficers.textContent = `Officers: ${club.officers || 'TBD'}`;
+            if (modalName) modalName.textContent = club.name;
+            if (modalMeeting) modalMeeting.textContent = `Meeting: ${club.meeting}`;
+            if (modalLocation) modalLocation.textContent = `Location: ${club.location || 'TBD'}`;
+            if (modalShortDesc) modalShortDesc.textContent = club.shortDesc;
+            if (modalCommitment) modalCommitment.textContent = `Commitment: ${club.commitment || 'TBD'}`;
+            if (modalAdvisor) modalAdvisor.textContent = `Advisor: ${club.advisor || 'TBD'}`;
+            if (modalOfficers) modalOfficers.textContent = `Officers: ${club.officers || 'TBD'}`;
 
             // Set banner image (with fallback)
-            modalBanner.src = club.banner || '/images/banner-placeholder.jpg';
+            if (modalBanner) modalBanner.src = club.banner || '/images/banner-placeholder.jpg';
 
-            // FIXED: Link to the individual club page properly
-            modalMore.href = `/clubs/${club.id}`;
+            // Set link to individual club page
+            if (modalMore) modalMore.href = `/clubs/${club.id}`;
 
             // Show modal and overlay
             overlay.style.display = 'block';
@@ -70,8 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // CLOSE MODAL
-    // Close when clicking the X button
-    closeBtn.addEventListener('click', closeModal);
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
 
     // Close when clicking outside the modal (on the overlay)
     overlay.addEventListener('click', (e) => {
@@ -80,10 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // FIXED: Close modal with Escape key - added to document, not just when modal visible
+    // Close modal with Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            // Only close if modal is currently visible
             if (modal.style.display === 'block') {
                 closeModal();
             }
