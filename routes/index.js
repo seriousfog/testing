@@ -19,7 +19,7 @@ router.get('/', async function(req, res, next) {
       officers: 'See details page',
       banner: club.clublogo || '/images/placeholder-banner.png',
       logo: club.clublogo || '/images/placeholder-logo.png',
-      category: club.category
+      category: club.category,
     }));
 
     res.render('index', {
@@ -133,7 +133,8 @@ router.post('/officers', async function(req, res) {
       officerstudentid: req.body.officerstudentid,
       officergradelevel: req.body.officergradelevel,
       officerusername: req.body.officerusername,
-      officerpassword: req.body.officerpassword
+      officerpassword: req.body.officerpassword,
+      officerimage: req.body.officerimage
     });
 
     res.redirect('/');

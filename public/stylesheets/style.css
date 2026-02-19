@@ -50,7 +50,7 @@ nav.main-nav a:hover {
   color: white;
 }
 
-/* MAIN CONTENT WRAPPER */
+/* MAIN CONTENT */
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -133,9 +133,15 @@ nav.main-nav a:hover {
 }
 
 .card-info p.short {
-  font-style: italic;
+  font-style: oblique;
   color: #777;
   margin-top: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  height: 4lh;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* MODAL OVERLAY */
@@ -242,7 +248,7 @@ nav.main-nav a:hover {
   transform: translateX(3px);
 }
 
-/* INDIVIDUAL CLUB PAGE - FIXED LAYOUT */
+/* INDIVIDUAL CLUB PAGE */
 .club-detail-page {
   background: blanchedalmond;
   min-height: 100vh;
@@ -387,7 +393,7 @@ nav.main-nav a:hover {
 }
 
 .club-info-block h3 {
-  font-style: italic;
+  font-style: oblique;
   font-size: 1.5rem;
   text-align: center;
   margin-bottom: 20px;
@@ -403,7 +409,7 @@ nav.main-nav a:hover {
   color: #555;
 }
 
-/* Side Panel (Activities/Opportunities) */
+/* (Activities/Opportunities) */
 .club-side-panel {
   position: fixed;
   right: 20px;
@@ -465,13 +471,21 @@ nav.main-nav a:hover {
   color: white;
 }
 
+.button-cancel {
+  border: 1px solid black;
+  padding: 10px;
+  background-color: #7e0707;
+  color: white;
+  margin-left: 5px;
+}
+
 /* Back Button */
 .back-button-container {
   margin-top: 30px;
   text-align: center;
 }
 
-.back-btn {
+.back-button {
   display: inline-block;
   background: #f7a602;
   color: #1a1a1a;
@@ -488,7 +502,6 @@ nav.main-nav a:hover {
   transform: translateX(-3px);
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   header.main-header {
     padding: 0 15px;
@@ -555,126 +568,274 @@ nav.main-nav a:hover {
   }
 }
 
-/* ============================================ */
-/* Brookylen Code - KEEPING ORIGINAL STYLES    */
-/* ============================================ */
-body1 {
-  padding: 0;
-  margin: 0;
-  background: blanchedalmond;
+a {
+  color: #00B7FF;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+  padding: 5px;
+  background-color: #f6b32c;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.edison-logo {
+  width: 55px;
+  height: 55px;
+  margin: 10px;
+}
+
+.site-name {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  align-self: center;
+  border-left: 1px solid black;
+  padding-left: 15px;
+}
+
+a, .home-link {
+  text-decoration: none;
+  color: black;
+}
+
+.content {
+  margin: 10px;
+  padding: 10px;
+}
+
+.club-cards-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+.active, .club-card:hover {
+  background-color: #dfdfdf;
+}
+
+.commit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px solid grey;
+}
+
+.club-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.club-name {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  padding: 5px;
+}
+
+button.club-card {
+  border: none;
+}
+
+.club-pic-logo{
+  width: 350px;
+  height: 300px;
+}
+
+.club-board {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.club-runner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.club-content {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.club-news {
+  background-color: #ffffff;
+  margin-top: 100px;
+  margin-bottom: -235px;
+  margin-left: 180px;
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px;
+  width: 30%;
+  height: 600px;
+  box-sizing: border-box;
+}
+
+.club-activities {
+  padding: 15px;
+  height: 50%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.club-activities-heading{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.club-opportunities {
+  border-top: 1px solid black;
+  padding: 15px;
+  height: 50%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.club-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px;
+}
+
+.table-calendar {
+  border-collapse: collapse;
+  width: 50%;
+}
+
+.table-calendar td, .table-calendar th {
+  padding: 10px;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  vertical-align: top;
+}
+
+.calendar-top {
+  width: 50%;
+  text-align: center;
+}
+
+td:hover {
+  background-color: #f1bf82;
+  cursor: pointer;
+}
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.popup {
+  font-family: Arial, sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.calendar {
+  width: 800px;
+  height: 600px;
+}
+
+.map{
+  width: 600px;
+  height: 600px;
+}
+
+.info-section {
+  display: flex;
+  padding: 25px;
+  gap: 30px;
+  justify-content: space-evenly;
+}
+
+.club-engagements{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 20px;
+  padding: 10px;
+}
+
+.club-meet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-container {
+  padding: 10px;
+}
+
+.content-form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f6f6f6;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+}
+
+.form-header {
+  font-weight: bold;
   font-family: inter-variable, system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 
-.clubofficer-content1 {
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-bottom: 50px;
+.form-label {
+  padding: 10px;
 }
 
-.officercontent1 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 1440px;
+button {
+  padding: 10px;
+  cursor: pointer;
 }
 
-.knowcontent1 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 1440px;
+textarea {
+  resize: both;
+  width: 500px;
+  height: 95px;
 }
 
-.container1 {
-  max-width: 1300px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: -40px;
-  position: relative;
-}
-
-.content-container1 {
-  background: white;
-  border-radius: 12px;
-  margin-top: 45px;
-}
-
-.club-content1 {
-  padding-left: 150px;
-  padding-bottom: 50px;
-}
-
-.club-card-header-image1 {
-  margin-top: 2%;
-  width: 250px;
-  height: 240px;
-  border-radius: 15px;
-  box-shadow: 5px 5px 2px rgba(0,0,0,0.5);
-}
-
-.clubname1 {
-  position: absolute;
-  font-size: 219%;
-  color: #5c5454;
-  font-weight: 700;
-  left: 445px;
-  top: 150px;
-}
-
-.tags1 {
-  position: absolute;
-  font-size: 100%;
-  color: #5c5454;
-  font-weight: 400;
-  left: 445px;
-  top: 200px;
-  border: 2px solid black;
-  border-radius: 12px;
-}
-
-.bigdescription1 {
-  position: absolute;
-  font-size: 125%;
-  font-weight: 400;
-  left: 445px;
-  top: 250px;
-  max-width: 550px;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  height: 4lh;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.room1 {
-  position: relative;
-  font-size: 115%;
-  font-weight: 500;
-  left: 295px;
-}
-
-.advisor1 {
-  position: relative;
-  font-size: 115%;
-  font-weight: 500;
-  left: 295px;
-}
-
-.border1 {
-  position: relative;
-  margin-top: -30px;
-  border: 1px solid black;
-  width: 1200px;
-}
-
+/* Brookylen Code */
 .calender1 {
   margin-top: 50px;
   margin-bottom: -50px;
@@ -683,69 +844,7 @@ body1 {
   margin-left: 180px;
 }
 
-.border21 {
-  position: relative;
-  border: 1px solid black;
-  margin-bottom: 50px;
-  margin-left: 38px;
-  width: 1400px;
-}
-
-.officers1 {
-  position: relative;
-  left: 45%;
-  margin-top: -50px;
-  margin-bottom: 75px;
-  font-size: 156.25%;
-  font-weight: 600;
-}
-
-.otitle1 {
-  font-size: 12px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.officersimage1 {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: -25px;
-  width: 150px;
-  height: 150px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
-}
-
-.links1 {
-  position: relative;
-  margin-right: 20px;
-  width: 25px;
-  height: 25px;
-  left: 5px;
-  bottom: 85px;
-  border-radius: 5px;
-}
-
-.q1 {
-  font-style: oblique;
-  position: relative;
-  text-align: center;
-  font-size: 156.25%;
-  font-weight: 600;
-}
-
-.a1 {
-  position: relative;
-  padding-left: 55px;
-  padding-bottom: 50px;
-  font-size: 18px;
-  font-weight: 400;
-}
-
-/* ============================================ */
-/* Shine's Code - KEEPING ORIGINAL STYLES      */
-/* ============================================ */
+/* Shine's Code */
 .club-news {
   background-color: #fff8cd;
   border: 8px solid #000000;
@@ -802,4 +901,62 @@ body1 {
 
 .formHide2{
   display: none;
+}
+
+.officerbutton1 {
+  margin-left: 43%;
+}
+
+.officerbutton2 {
+  margin-right: 43%;
+}
+
+/* Efren Nav*/
+
+header.main-header {
+  margin: 0;
+  padding: 0 30px;
+  box-sizing: border-box;
+  background-color: #f7a602;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 55px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Styling */
+header.main-header .logo img {
+  padding-top: 5px;
+  height: 45px;
+  width: auto;
+}
+
+/* Navigation Links */
+nav.main-nav {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+nav.main-nav a {
+  color: #1a1a1a;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+nav.main-nav a:hover {
+  color: white;
+}
+
+.borderadd {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

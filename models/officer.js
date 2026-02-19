@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
         officerstudentid: DataTypes.STRING,
         officergradelevel: DataTypes.STRING,
         officerusername: DataTypes.STRING,
-        officerpassword: DataTypes.STRING
+        officerpassword: DataTypes.STRING,
+        officerimage: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'Officer',
