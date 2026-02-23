@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
       meeting: club.meetingdate,
       location: club.clubroomnumber,
       shortDesc: club.smalldescription,
-      commitment: 'TBD',
+      commitment: club.commitment,
       advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
       officers: 'See details page',
       banner: club.clublogo || '/images/placeholder-banner.png',
@@ -56,7 +56,7 @@ router.get('/clubs/:id', async function(req, res, next) {
       meeting: club.meetingdate,
       location: club.clubroomnumber,
       shortDesc: club.smalldescription,
-      commitment: 'TBD',
+      commitment: club.commitment,
       advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
       secondAdvisor: club.secondadvisorfirstname ?
           `${club.secondadvisorfirstname} ${club.secondadvisorlastname || ''}`.trim() : null,
@@ -156,6 +156,7 @@ router.get('/search', async function(req, res) {
         [Op.or]: [
           { clubname: { [Op.iLike]: `%${query}%` } },
           { category: { [Op.iLike]: `%${query}%` } },
+          { commitment: { [Op.iLike]: `%${query}%` } },
           { smalldescription: { [Op.iLike]: `%${query}%` } }
         ]
       }
@@ -169,7 +170,7 @@ router.get('/search', async function(req, res) {
         meeting: club.meetingdate,
         location: club.clubroomnumber,
         shortDesc: club.smalldescription,
-        commitment: 'TBD',
+        commitment: club.commitment,
         advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
         officers: 'See details page',
         banner: club.clublogo || '/images/placeholder-banner.png',
@@ -205,7 +206,8 @@ router.post('/clubs/:id/edit', async function(req, res) {
       meetingdate: req.body.meetingdate,
       clubroomnumber: req.body.clubroomnumber,
       category: req.body.category,
-      smalldescription: req.body.smalldescription
+      smalldescription: req.body.smalldescription,
+      commitment: req.body.commitment
     }, {
       where: { id: req.params.id }
     });
@@ -226,5 +228,9 @@ router.post('/clubs/:id/delete', async function(req, res) {
     res.send('Error deleting club');
   }
 });
+
+router.get('/test', function(req, res) {
+  res.render('/test');
+})
 
 module.exports = router;

@@ -41,6 +41,13 @@ block content
                     option(value="STEM", selected=club.category==='STEM') STEM
 
             .input-container
+                label.form-label Commitment:
+                select(name="commitment")
+                    option(value="Low", selected=club.commitment==='Low') Low
+                    option(value="Medium", selected=club.commitment==='Medium') Medium
+                    option(value="High", selected=club.commitment==='High') High
+
+            .input-container
                 label.form-label Short Description:
                 textarea(name="smalldescription", rows="3")= club.smalldescription
 
