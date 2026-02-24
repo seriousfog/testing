@@ -960,3 +960,15 @@ nav.main-nav a:hover {
 .borderadd {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.footerborder {
+  background: #f7a602;
+  padding: 20px;
+}
+
+.footer {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}

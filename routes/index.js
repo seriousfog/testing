@@ -14,6 +14,7 @@ router.get('/', async function(req, res, next) {
       meeting: club.meetingdate,
       location: club.clubroomnumber,
       shortDesc: club.smalldescription,
+      uniqueDesc: club.uniquedescription,
       commitment: club.commitment,
       advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
       officers: 'See details page',
@@ -57,6 +58,7 @@ router.get('/clubs/:id', async function(req, res, next) {
       location: club.clubroomnumber,
       shortDesc: club.smalldescription,
       commitment: club.commitment,
+      uniqueDesc: club.uniquedescription,
       advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
       secondAdvisor: club.secondadvisorfirstname ?
           `${club.secondadvisorfirstname} ${club.secondadvisorlastname || ''}`.trim() : null,
@@ -96,6 +98,8 @@ router.post('/clubs', async function(req, res) {
       clubroomnumber: req.body.clubroomnumber,
       category: req.body.category,
       smalldescription: req.body.smalldescription,
+      uniquedescription: req.body.uniquedescription,
+      commitment: req.body.commitment,
       clublogo: req.body.clublogo || 'placeholder.jpg'
     });
 
@@ -156,6 +160,7 @@ router.get('/search', async function(req, res) {
         [Op.or]: [
           { clubname: { [Op.iLike]: `%${query}%` } },
           { category: { [Op.iLike]: `%${query}%` } },
+          { advisor: { [Op.iLike]: `%${query}%` } },
           { commitment: { [Op.iLike]: `%${query}%` } },
           { smalldescription: { [Op.iLike]: `%${query}%` } }
         ]
@@ -171,6 +176,7 @@ router.get('/search', async function(req, res) {
         location: club.clubroomnumber,
         shortDesc: club.smalldescription,
         commitment: club.commitment,
+        uniqueDesc: club.uniquedescription,
         advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
         officers: 'See details page',
         banner: club.clublogo || '/images/placeholder-banner.png',
@@ -207,7 +213,8 @@ router.post('/clubs/:id/edit', async function(req, res) {
       clubroomnumber: req.body.clubroomnumber,
       category: req.body.category,
       smalldescription: req.body.smalldescription,
-      commitment: req.body.commitment
+      commitment: req.body.commitment,
+      uniquedescription: req.body.uniquedescription
     }, {
       where: { id: req.params.id }
     });

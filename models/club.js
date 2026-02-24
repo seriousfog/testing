@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
         smalldescription: DataTypes.TEXT,
         secondadvisorfirstname: DataTypes.STRING,
         secondadvisorlastname: DataTypes.STRING,
-        commitment: DataTypes.STRING
+        commitment: DataTypes.STRING,
+        uniquedescription: DataTypes.TEXT
     }, {
         sequelize,
         modelName: 'Club',
