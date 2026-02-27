@@ -160,8 +160,8 @@ router.get('/search', async function(req, res) {
         [Op.or]: [
           { clubname: { [Op.iLike]: `%${query}%` } },
           { category: { [Op.iLike]: `%${query}%` } },
-          { advisor: { [Op.iLike]: `%${query}%` } },
           { commitment: { [Op.iLike]: `%${query}%` } },
+          { advisorlastname: { [Op.iLike]: `%${query}%` } },
           { smalldescription: { [Op.iLike]: `%${query}%` } }
         ]
       }
@@ -214,7 +214,8 @@ router.post('/clubs/:id/edit', async function(req, res) {
       category: req.body.category,
       smalldescription: req.body.smalldescription,
       commitment: req.body.commitment,
-      uniquedescription: req.body.uniquedescription
+      uniquedescription: req.body.uniquedescription,
+      clublogo: req.body.clublogo || 'placeholder.jpg'
     }, {
       where: { id: req.params.id }
     });
