@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    .main-content
+        h1 Login
+
+        if error
+            .error-message(style="color: red; margin-bottom: 20px;")= error
+
+        form.content-form(action="/login", method="POST")
+            .form-header Login
+
+            .input-container
+                label.form-label Email:
+                input(type="text", name="Email" id='email')
+
+            .input-container
+                label.form-label Password:
+                input(type="password", name="password" id='password')
+
+            .club-create-form-button
+                button(type="submit") Login

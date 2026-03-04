@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { Club, Officer } = require('../models');
+const { Club, Officer, User } = require('../models');
 const { Op } = require('sequelize');
 
 // GET home page - shows all clubs from database
@@ -237,8 +237,40 @@ router.post('/clubs/:id/delete', async function(req, res) {
   }
 });
 
-router.get('/test', function(req, res) {
-  res.render('/test');
-})
+const md5 = require('md5')
+
+router.get('/registeruser', function(req, res) {
+  res.render('register-user', { title: 'Register User' });
+});
+
+router.post('/registeruser', async function(req, res) {
+    try {
+      await User.create({
+        email: req.body.email,
+        password: md5(req.body.password),
+        ufirstname: req.body.ufirstname,
+        ulastname: req.body.ulastname
+      });
+      res.redirect('/');
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.render('register-user', {
+        title: 'Register User',
+        error: 'Failed to register User: ' + error.message
+      });
+    }
+  });
+
+const passport = require('passport');
+
+router.get('/login', function(req, res) {
+  res.render('login', { title: 'Login User' });
+});
+
+module.exports.authenticate = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureMessage: true
+});
 
 module.exports = router;
