@@ -244,33 +244,32 @@ const md5 = require('md5')
 router.get('/registeruser', function(req, res) {
   res.render('register-user', { title: 'Register User' });
 });
-
-router.post('/registeruser', async function(req, res) {
-    try {
-      await clubUser.create({
-        email: req.body.email,
-        password: md5(req.body.password),
-        ufirstname: req.body.ufirstname,
-        ulastname: req.body.ulastname
-      });
-      res.redirect('/');
-    } catch (error) {
-      console.error('Error creating user:', error);
-      res.render('register-user', {
-        title: 'Register User',
-        error: 'Failed to register User: ' + error.message
-      });
-    }
-  });
+    router.post('/registeruser', async function (req, res) {
+      try {
+        await User.create({
+          email: req.body.email,
+          password: md5(req.body.password),
+          ufirstname: req.body.ufirstname,
+          ulastname: req.body.ulastname
+        });
+        res.redirect('/');
+      } catch (error) {
+        console.error('Error creating user:', error);
+        res.render('register-user', {
+          title: 'Register User',
+          error: 'Failed to register User: ' + error.message
+        });
+      }
+    });
 
 const passport = require('passport');
   router.get('/login', function (req, res) {
     res.render('login', {title: 'Login User'});
   });
-  module.exports.authenticate = passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureMessage: true
+    module.exports.authenticate = passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureMessage: true
   });
 
 module.exports = router;

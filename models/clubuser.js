@@ -2,25 +2,25 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class clubUser extends Model {
+    class User extends Model {
         static associate() {
-            // Only define association if Officer model exists
-                {
+            // Only define association if model exists
+            {
             }
         }
     }
 
-    clubUser.init({
+    User.init({
         email: DataTypes.STRING,
         ufirstname: DataTypes.STRING,
         ulastname: DataTypes.STRING,
         password: DataTypes.STRING
     }, {
         sequelize,
-        modelName: 'clubUser',
-        tableName: 'clubuser',
+        modelName: 'User',
+        tableName: 'user',
         timestamps: false
     });
 
-    return clubUser;
+    return User;
 };
