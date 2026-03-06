@@ -18,7 +18,7 @@ router.get('/', async function(req, res, next) {
       commitment: club.commitment,
       advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
       officers: 'See details page',
-      banner: club.clublogo || '/images/placeholder-banner.png',
+      banner: club.clubbanner || '/images/placeholder-banner.png',
       logo: club.clublogo || '/images/placeholder-logo.png',
       category: club.category,
     }));
@@ -63,7 +63,7 @@ router.get('/clubs/:id', async function(req, res, next) {
       secondAdvisor: club.secondadvisorfirstname ?
           `${club.secondadvisorfirstname} ${club.secondadvisorlastname || ''}`.trim() : null,
       officers: officersList,
-      banner: club.clublogo || '/images/placeholder-banner.png',
+      banner: club.clubbanner || '/images/placeholder-banner.png',
       logo: club.clublogo || '/images/placeholder-logo.png',
       category: club.category
     };
@@ -100,7 +100,8 @@ router.post('/clubs', async function(req, res) {
       smalldescription: req.body.smalldescription,
       uniquedescription: req.body.uniquedescription,
       commitment: req.body.commitment,
-      clublogo: req.body.clublogo || 'placeholder.jpg'
+      clublogo: req.body.clublogo || 'placeholder.jpg',
+      clubbanner: req.body.clubbanner || '/images/placeholder-banner.png'
     });
 
     console.log('Club created successfully:', newClub.id); // Debug: success
@@ -179,7 +180,7 @@ router.get('/search', async function(req, res) {
         uniqueDesc: club.uniquedescription,
         advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
         officers: 'See details page',
-        banner: club.clublogo || '/images/placeholder-banner.png',
+        banner: club.clubbanner || '/images/placeholder-banner.png',
         logo: club.clublogo || '/images/placeholder-logo.png',
         category: club.category
       })),
@@ -215,7 +216,8 @@ router.post('/clubs/:id/edit', async function(req, res) {
       smalldescription: req.body.smalldescription,
       commitment: req.body.commitment,
       uniquedescription: req.body.uniquedescription,
-      clublogo: req.body.clublogo || 'placeholder.jpg'
+      clublogo: req.body.clublogo || 'placeholder.jpg',
+      clubbanner: req.body.clubbanner || '/images/placeholder-banner.png'
     }, {
       where: { id: req.params.id }
     });
@@ -245,7 +247,7 @@ router.get('/registeruser', function(req, res) {
 
 router.post('/registeruser', async function(req, res) {
     try {
-      await User.create({
+      await clubUser.create({
         email: req.body.email,
         password: md5(req.body.password),
         ufirstname: req.body.ufirstname,
@@ -262,15 +264,13 @@ router.post('/registeruser', async function(req, res) {
   });
 
 const passport = require('passport');
-
-router.get('/login', function(req, res) {
-  res.render('login', { title: 'Login User' });
-});
-
-module.exports.authenticate = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureMessage: true
-});
+  router.get('/login', function (req, res) {
+    res.render('login', {title: 'Login User'});
+  });
+  module.exports.authenticate = passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureMessage: true
+  });
 
 module.exports = router;

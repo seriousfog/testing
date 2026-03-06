@@ -7,7 +7,7 @@ block content
         if error
             .error-message(style="color: red; margin-bottom: 20px;")= error
 
-        form.content-form(action="/users", method="POST")
+        form.content-form(action="/registeruser", method="POST")
             .form-header User
 
 
@@ -21,7 +21,7 @@ block content
 
             .input-container
                 label.form-label Email:
-                input(type="text", name="Email")
+                input(type="text", name="email")
 
             .input-container
                 label.form-label Password:

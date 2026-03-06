@@ -34,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
         secondadvisorfirstname: DataTypes.STRING,
         secondadvisorlastname: DataTypes.STRING,
         commitment: DataTypes.STRING,
-        uniquedescription: DataTypes.TEXT
+        uniquedescription: DataTypes.TEXT,
+        clubbanner: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'Club',
