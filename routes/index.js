@@ -266,7 +266,7 @@ const passport = require('passport');
   router.get('/login', function (req, res) {
     res.render('login', {title: 'Login User'});
   });
-    module.exports.authenticate = passport.authenticate('local', {
+  module.exports.authenticate = passport.authenticate('local', {
       successRedirect: '/',
       failureRedirect: '/login',
       failureMessage: true

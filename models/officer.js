@@ -4,7 +4,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Officer extends Model {
         static associate(models) {
-            // Only define association if Club model exists
             if (models.Club) {
                 Officer.belongsTo(models.Club, {
                     foreignKey: 'clubin',
