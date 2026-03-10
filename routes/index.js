@@ -250,7 +250,10 @@ router.get('/registeruser', function(req, res) {
           email: req.body.email,
           password: md5(req.body.password),
           ufirstname: req.body.ufirstname,
-          ulastname: req.body.ulastname
+          ulastname: req.body.ulastname,
+          student: req.body.student,
+          officer: req.body.officer,
+          admin: req.body.admin,
         });
         res.redirect('/');
       } catch (error) {
@@ -271,5 +274,6 @@ const passport = require('passport');
       failureRedirect: '/login',
       failureMessage: true
   });
+
 
 module.exports = router;
