@@ -100,16 +100,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-email: {
-  type: DataTypes.STRING,
-  allowNull: false,
-  unique: true
-}
-
-if (!student && !officer) {
-  return res.render('register-user', {
-    title: 'Register User',
-    error: 'Select a role'
-  });
-}
