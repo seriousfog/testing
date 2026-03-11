@@ -298,7 +298,7 @@ router.post(
     })
 );
 
-router.get('/', addUsertoViews)
+router.get('/', addUsertoViews, redirectGuests);
 function addUsertoViews(req, res, next) {
   if (req.user){
     res.locals.user = req.user;
@@ -306,7 +306,7 @@ function addUsertoViews(req, res, next) {
   next();
 }
 
-router.get('/', redirectGuests);
+router.get('/', redirectGuests, addUsertoViews);
 function redirectGuests(req, res, next) {
   if (!req.user) {
     res.redirect('/login');
