@@ -239,6 +239,12 @@ router.post('/clubs/:id/delete', async function(req, res) {
   }
 });
 
+email: {
+  type: DataTypes.STRING,
+  allowNull: false,
+  unique: true
+}
+
 const md5 = require('md5');
 
 router.get('/registeruser', function(req, res) {
@@ -297,6 +303,36 @@ router.post(
     failureMessage: true
   })
 );
+
+if (!student && !officer) {
+  return res.render('register-user', {
+    title: 'Register User',
+    error: 'Select a role'
+  });
+}
+
+const { Club, Officer } = require('../models');
+
+async function requireClubPermission(req, res, next) {
+  if (!req.user) return res.redirect('/login');
+
+  const club = await Club.findByPk(req.params.id);
+  if (!club) return res.status(404).send('Club not found');
+
+  if (req.user.admin) {
+    req.club = club;
+    return next();
+  }
+
+  if (req.user.officer && req.user.clubin === club.id) {
+    req.club = club;
+    return next();
+  }
+
+  res.status(403).send('Forbidden');
+}
+
+module.exports = { requireClubPermission };
 
 
 module.exports = router;
