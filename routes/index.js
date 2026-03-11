@@ -239,41 +239,103 @@ router.post('/clubs/:id/delete', async function(req, res) {
   }
 });
 
-const md5 = require('md5')
+const md5 = require('md5');
 
 router.get('/registeruser', function(req, res) {
   res.render('register-user', { title: 'Register User' });
 });
-    router.post('/registeruser', async function (req, res) {
-      try {
-        await User.create({
-          email: req.body.email,
-          password: md5(req.body.password),
-          ufirstname: req.body.ufirstname,
-          ulastname: req.body.ulastname,
-          student: req.body.student,
-          officer: req.body.officer,
-          admin: req.body.admin,
-        });
-        res.redirect('/');
-      } catch (error) {
-        console.error('Error creating user:', error);
-        res.render('register-user', {
-          title: 'Register User',
-          error: 'Failed to register User: ' + error.message
-        });
-      }
+
+router.post('/registeruser', async function (req, res) {
+  try {
+
+    const existingUser = await User.findOne({
+      where: { email: req.body.email }
     });
 
+    if (existingUser) {
+      return res.render('register-user', {
+        title: 'Register User',
+        error: 'Email already registered'
+      });
+    }
+    const student = req.body.student === 'true';
+    const officer = req.body.officer === 'true';
+
+    await User.create({
+      email: req.body.email,
+      password: md5(req.body.password),
+      ufirstname: req.body.ufirstname,
+      ulastname: req.body.ulastname,
+      student: student,
+      officer: officer,
+      admin: false
+    });
+
+    res.redirect('/');
+
+  } catch (error) {
+    console.error('Error creating user:', error);
+
+    res.render('register-user', {
+      title: 'Register User',
+      error: 'Failed to register user: ' + error.message
+    });
+  }
+});
+
 const passport = require('passport');
-  router.get('/login', function (req, res) {
-    res.render('login', {title: 'Login User'});
-  });
-  module.exports.authenticate = passport.authenticate('local', {
+
+router.get('/login', function (req, res) {
+  res.render('login', { title: 'Login User' });
+});
+
+router.post(
+    '/login',
+    passport.authenticate('local', {
       successRedirect: '/',
       failureRedirect: '/login',
       failureMessage: true
-  });
+    })
+);
 
+router.get('/', addUsertoViews)
+function addUsertoViews(req, res, next) {
+  if (req.user){
+    res.locals.user = req.user;
+  }
+  next();
+}
+
+router.get('/', redirectGuests);
+function redirectGuests(req, res, next) {
+  if (!req.user) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+}
 
 module.exports = router;
+
+// const { club, officer } = require('../models');
+//
+// async function requireClubPermission(req, res, next) {
+//   if (!req.user) return res.redirect('/login');
+//
+//   const club = await Club.findByPk(req.params.id);
+//   if (!club) return res.status(404).send('Club not found');
+//
+//   if (req.user.admin) {
+//     req.club = club;
+//     return next();
+//   }
+//
+//   if (req.user.officer && req.user.clubin === club.id) {
+//     req.club = club;
+//     return next();
+//   }
+//
+//   res.status(403).send('Forbidden');
+// }
+//
+// module.exports = { requireClubPermission };
