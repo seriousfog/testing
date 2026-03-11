@@ -239,41 +239,62 @@ router.post('/clubs/:id/delete', async function(req, res) {
   }
 });
 
-const md5 = require('md5')
+const md5 = require('md5');
 
 router.get('/registeruser', function(req, res) {
   res.render('register-user', { title: 'Register User' });
 });
-    router.post('/registeruser', async function (req, res) {
-      try {
-        await User.create({
-          email: req.body.email,
-          password: md5(req.body.password),
-          ufirstname: req.body.ufirstname,
-          ulastname: req.body.ulastname,
-          student: req.body.student,
-          officer: req.body.officer,
-          admin: req.body.admin,
-        });
-        res.redirect('/');
-      } catch (error) {
-        console.error('Error creating user:', error);
-        res.render('register-user', {
-          title: 'Register User',
-          error: 'Failed to register User: ' + error.message
-        });
-      }
+
+router.post('/registeruser', async function (req, res) {
+  try {
+
+    const existingUser = await User.findOne({
+      where: { email: req.body.email }
     });
 
+    if (existingUser) {
+      return res.render('register-user', {
+        title: 'Register User',
+        error: 'Email already registered'
+      });
+    }
+
+    await User.create({
+      email: req.body.email,
+      password: md5(req.body.password),
+      ufirstname: req.body.ufirstname,
+      ulastname: req.body.ulastname,
+      student: req.body.student,
+      officer: req.body.officer,
+      admin: req.body.admin,
+    });
+
+    res.redirect('/');
+
+  } catch (error) {
+    console.error('Error creating user:', error);
+
+    res.render('register-user', {
+      title: 'Register User',
+      error: 'Failed to register user: ' + error.message
+    });
+  }
+});
+
 const passport = require('passport');
-  router.get('/login', function (req, res) {
-    res.render('login', {title: 'Login User'});
-  });
-  module.exports.authenticate = passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureMessage: true
-  });
+
+router.get('/login', function (req, res) {
+  res.render('login', { title: 'Login User' });
+});
+
+router.post(
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureMessage: true
+  })
+);
 
 
 module.exports = router;
