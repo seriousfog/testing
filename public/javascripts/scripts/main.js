@@ -106,3 +106,10 @@ email: {
   allowNull: false,
   unique: true
 }
+
+if (!student && !officer) {
+  return res.render('register-user', {
+    title: 'Register User',
+    error: 'Select a role'
+  });
+}
