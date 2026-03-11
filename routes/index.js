@@ -258,15 +258,17 @@ router.post('/registeruser', async function (req, res) {
         error: 'Email already registered'
       });
     }
-
+    const student = req.body.student === 'true';
+    const officer = req.body.officer === 'true';
+    
     await User.create({
       email: req.body.email,
       password: md5(req.body.password),
       ufirstname: req.body.ufirstname,
       ulastname: req.body.ulastname,
-      student: req.body.student,
-      officer: req.body.officer,
-      admin: req.body.admin,
+      student: student,
+      officer: officer,
+      admin: false
     });
 
     res.redirect('/');
