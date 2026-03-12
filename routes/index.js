@@ -81,7 +81,7 @@ router.get('/clubs/:id', async function(req, res, next) {
 // SHINE'S FORM ROUTES
 
 // GET club creation form
-router.get('/clubcreate', function(req, res) {
+router.get('/clubcreate', requireLogin, function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
@@ -123,7 +123,7 @@ router.post('/clubs', async function(req, res) {
 });
 
 // GET officer registration form
-router.get('/registerofficer', function(req, res) {
+router.get('/registerofficer', requireLogin, function(req, res) {
   res.render('register-officer', { title: 'Register Officer' });
 });
 
@@ -311,13 +311,6 @@ function requireLogin(req, res, next) {
   next();
 }
 
-router.get('/clubcreate', requireLogin, function(req, res) {
-  res.render('club-create', { title: 'Create New Club' });
-});
-
-router.get('/registerofficer', requireLogin, function(req, res) {
-  res.render('register-officer', { title: 'Register Officer' });
-});
 
 module.exports = router;
 
