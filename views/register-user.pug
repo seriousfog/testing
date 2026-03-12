@@ -4,9 +4,6 @@ block content
     .main-content
         h1 Register User
 
-        if error
-            .error-message(style="color: red; margin-bottom: 20px;")= error
-
         form.content-form(action="/registeruser", method="POST")
             .form-header User
 

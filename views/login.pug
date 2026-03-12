@@ -4,9 +4,6 @@ block content
     .main-content
         h1 Login
 
-        if error
-            .error-message(style="color: red; margin-bottom: 20px;")= error
-
         form.content-form(action="/login", method="POST")
             .form-header Login
 
@@ -20,5 +17,3 @@ block content
 
             .club-create-form-button
                 button(type="submit") Login
-        if error
-            p.error=error

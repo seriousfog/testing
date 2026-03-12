@@ -5,9 +5,6 @@ block content
         .main-content
             h1 Create New Club
 
-            if error
-                .error-message(style="color: red; margin-bottom: 20px;")= error
-
             form.content-form(action="/clubs", method="POST")
                 .form-header Club Information
 

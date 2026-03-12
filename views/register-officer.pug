@@ -5,9 +5,6 @@ block content
         .main-content
             h1 Register Club Officer
 
-            if error
-                .error-message(style="color: red; margin-bottom: 20px;")= error
-
             form.content-form(action="/officers", method="POST")
                 .form-header Officer Information
 
