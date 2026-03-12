@@ -298,6 +298,12 @@ router.post(
     })
 );
 
+router.get('/logout', function(req, res) {
+  req.logout(function() {
+    res.redirect('/');
+  });
+});
+
 router.get('/', addUsertoViews, redirectGuests);
 function addUsertoViews(req, res, next) {
   if (req.user){
