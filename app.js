@@ -10,7 +10,7 @@ var logger = require('morgan');
 
 // Bringing in the actual logic files
 var indexRouter = require('./routes/index'); // This will handle the home page ('/')
-var usersRouter = require('./routes/users'); // Placeholder for user-related stuff ('/users')
+var usersRouter = require('./models/user'); // Placeholder for user-related stuff ('/users')
 const session = require('express-session');
 
 var app = express();

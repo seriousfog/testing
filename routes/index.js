@@ -4,7 +4,7 @@ const { Club, Officer, User } = require('../models');
 const { Op } = require('sequelize');
 
 // GET home page - shows all clubs from database
-router.get('/', async function(req, res, next) {
+router.get('/', addUserToViews, async function(req, res, next) {
   try {
     const clubs = await Club.findAll();
 
@@ -34,7 +34,7 @@ router.get('/', async function(req, res, next) {
 });
 
 // GET individual club page by ID
-router.get('/clubs/:id', async function(req, res, next) {
+router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
   try {
     const club = await Club.findByPk(req.params.id, {
       include: [{ model: Officer, required: false }]
@@ -81,12 +81,12 @@ router.get('/clubs/:id', async function(req, res, next) {
 // SHINE'S FORM ROUTES
 
 // GET club creation form
-router.get('/clubcreate', function(req, res) {
+router.get('/clubcreate', requireLogin, addUserToViews, function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
 // POST new club - handles form submission
-router.post('/clubs', async function(req, res) {
+router.post('/clubs', addUserToViews, async function(req, res) {
   try {
     console.log('Form data received:', req.body); // Debug: see what data is coming in
 
@@ -123,12 +123,12 @@ router.post('/clubs', async function(req, res) {
 });
 
 // GET officer registration form
-router.get('/registerofficer', function(req, res) {
+router.get('/registerofficer', requireLogin, addUserToViews, function(req, res) {
   res.render('register-officer', { title: 'Register Officer' });
 });
 
 // POST new officer
-router.post('/officers', async function(req, res) {
+router.post('/officers', addUserToViews, async function(req, res) {
   try {
     await Officer.create({
       officertitle: req.body.officertitle,
@@ -153,7 +153,7 @@ router.post('/officers', async function(req, res) {
 });
 
 // GET search clubs
-router.get('/search', async function(req, res) {
+router.get('/search', addUserToViews, async function(req, res) {
   try {
     const query = req.query.q;
     const clubs = await Club.findAll({
@@ -193,7 +193,7 @@ router.get('/search', async function(req, res) {
 });
 
 // GET edit club form
-router.get('/clubs/:id/edit', async function(req, res) {
+router.get('/clubs/:id/edit', addUserToViews, async function(req, res) {
   try {
     const club = await Club.findByPk(req.params.id);
     if (!club) return res.status(404).send('Club not found');
@@ -204,7 +204,7 @@ router.get('/clubs/:id/edit', async function(req, res) {
 });
 
 // POST update club
-router.post('/clubs/:id/edit', async function(req, res) {
+router.post('/clubs/:id/edit', addUserToViews, async function(req, res) {
   try {
     await Club.update({
       clubname: req.body.clubname,
@@ -229,7 +229,7 @@ router.post('/clubs/:id/edit', async function(req, res) {
 });
 
 // POST delete club
-router.post('/clubs/:id/delete', async function(req, res) {
+router.post('/clubs/:id/delete', addUserToViews, async function(req, res) {
   try {
     await Club.destroy({ where: { id: req.params.id } });
     res.redirect('/');
@@ -241,11 +241,11 @@ router.post('/clubs/:id/delete', async function(req, res) {
 
 const md5 = require('md5');
 
-router.get('/registeruser', function(req, res) {
+router.get('/registeruser', addUserToViews, function(req, res) {
   res.render('register-user', { title: 'Register User' });
 });
 
-router.post('/registeruser', async function (req, res) {
+router.post('/registeruser', addUserToViews, async function (req, res) {
   try {
 
     const existingUser = await User.findOne({
@@ -285,35 +285,43 @@ router.post('/registeruser', async function (req, res) {
 
 const passport = require('passport');
 
-router.get('/login', function (req, res) {
-  res.render('login', { title: 'Login User' });
-});
 
-router.post(
-    '/login',
-    passport.authenticate('local', {
+router.post('/login', addUserToViews, passport.authenticate('local', {
       successRedirect: '/',
       failureRedirect: '/login',
       failureMessage: true
     })
 );
 
-router.get('/', addUsertoViews, redirectGuests);
-function addUsertoViews(req, res, next) {
+router.get('/login', addUserToViews, function (req, res) {
+  res.render('login', { title: 'Login User' });
+});
+
+module.exports.logout = function (req, res) {
+  req.logout();
+  res.redirect('/login');
+}
+
+router.get('/logout', addUserToViews, function(req, res) {
+  req.logout(function() {
+    res.redirect('/');
+  });
+});
+
+function addUserToViews(req, res, next) {
   if (req.user){
     res.locals.user = req.user;
   }
   next();
 }
 
-router.get('/', redirectGuests, addUsertoViews);
-function redirectGuests(req, res, next) {
+function requireLogin(req, res, next) {
   if (!req.user) {
-    res.redirect('/login');
-  } else {
-    next();
+    return res.redirect('/login');
   }
+  next();
 }
+
 
 module.exports = router;
 

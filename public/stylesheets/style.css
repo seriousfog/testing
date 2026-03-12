@@ -963,6 +963,16 @@ nav.main-nav a {
   transition: color 0.2s;
 }
 
+.displayname {
+  color: #1a1a1a;
+  font-weight: bold;
+  font-style: italic;
+  text-decoration: none;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
 nav.main-nav a:hover {
   color: white;
 }
