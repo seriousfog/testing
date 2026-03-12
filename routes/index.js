@@ -304,22 +304,20 @@ router.get('/logout', function(req, res) {
   });
 });
 
-router.get('/', addUsertoViews, redirectGuests);
-function addUsertoViews(req, res, next) {
-  if (req.user){
-    res.locals.user = req.user;
+function requireLogin(req, res, next) {
+  if (!req.user) {
+    return res.redirect('/login');
   }
   next();
 }
 
-router.get('/', redirectGuests, addUsertoViews);
-function redirectGuests(req, res, next) {
-  if (!req.user) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-}
+router.get('/clubcreate', requireLogin, function(req, res) {
+  res.render('club-create', { title: 'Create New Club' });
+});
+
+router.get('/registerofficer', requireLogin, function(req, res) {
+  res.render('register-officer', { title: 'Register Officer' });
+});
 
 module.exports = router;
 
