@@ -81,7 +81,7 @@ router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
 // SHINE'S FORM ROUTES
 
 // GET club creation form
-router.get('/clubcreate', requireLogin, addUserToViews, function(req, res) {
+router.get('/clubcreate', requireLogin, requireOfficerOrAdmin, addUserToViews, function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
