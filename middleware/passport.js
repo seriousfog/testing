@@ -46,4 +46,11 @@ passport.deserializeUser(function(user, cb) {
   });
 });
 
+function requireOfficerOrAdmin(req, res, next) {
+  if (req.user.admin || req.user.officer) {
+    return next();
+  }
+  res.redirect('/');
+}
+
 module.exports.passport = passport;
