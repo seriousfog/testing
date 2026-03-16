@@ -32,14 +32,18 @@ passport.use(validationStrategy);
 
 passport.serializeUser(function(user, cb) {
     process.nextTick(function() {
-        cb(null, {id: user.id, username: user.email, displayName: user.displayName})
+        passport.serializeUser(function(user, cb) {
+          process.nextTick(function() {
+            cb(null, user);
+          });
+        });
     });
 });
 
-passport.deserializeUser(async function(user, cb) {
-    process.nextTick(function() {
-        return cb(null, user);
-    });
+passport.deserializeUser(function(user, cb) {
+  process.nextTick(function() {
+    cb(null, user);
+  });
 });
 
 module.exports.passport = passport;
