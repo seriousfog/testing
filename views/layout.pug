@@ -12,7 +12,7 @@ html
             img(src="/images/Edison.png", alt="Logo")
         nav.main-nav
           a(href="/") Home
-          if user && (user.officer || user.admin)
+          if user && (user.role == "officer" || user.role == "admin")
             a(href="/clubcreate") Create Club
             a(href="/registerofficer") Add Officer
           if user

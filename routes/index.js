@@ -15,6 +15,7 @@ router.get('/', addUserToViews, async function(req, res, next) {
       location: club.clubroomnumber,
       shortDesc: club.smalldescription,
       uniqueDesc: club.uniquedescription,
+      bigDesc: club.bigdescription,
       commitment: club.commitment,
       advisor: `${club.advisorfirstname || ''} ${club.advisorlastname || ''}`.trim(),
       officers: 'See details page',
@@ -65,7 +66,8 @@ router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
       officers: officersList,
       banner: club.clubbanner || '/images/placeholder-banner.png',
       logo: club.clublogo || '/images/placeholder-logo.png',
-      category: club.category
+      category: club.category,
+      bigDesc: club.bigdescription,
     };
 
     res.render('club', {
@@ -81,7 +83,7 @@ router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
 // SHINE'S FORM ROUTES
 
 // GET club creation form
-router.get('/clubcreate', requireLogin, addUserToViews, function(req, res) {
+router.get('/clubcreate', requireLogin, requireOfficerOrAdmin, addUserToViews, function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
@@ -101,7 +103,8 @@ router.post('/clubs', addUserToViews, async function(req, res) {
       uniquedescription: req.body.uniquedescription,
       commitment: req.body.commitment,
       clublogo: req.body.clublogo || 'placeholder.jpg',
-      clubbanner: req.body.clubbanner || '/images/placeholder-banner.png'
+      clubbanner: req.body.clubbanner || '/images/placeholder-banner.png',
+      bigdescription: req.body.bigdescription,
     });
 
     console.log('Club created successfully:', newClub.id); // Debug: success
@@ -182,7 +185,8 @@ router.get('/search', addUserToViews, async function(req, res) {
         officers: 'See details page',
         banner: club.clubbanner || '/images/placeholder-banner.png',
         logo: club.clublogo || '/images/placeholder-logo.png',
-        category: club.category
+        category: club.category,
+        bigDescription: club.bigdescription,
       })),
       searchQuery: query
     });
@@ -217,7 +221,8 @@ router.post('/clubs/:id/edit', addUserToViews, async function(req, res) {
       commitment: req.body.commitment,
       uniquedescription: req.body.uniquedescription,
       clublogo: req.body.clublogo || 'placeholder.jpg',
-      clubbanner: req.body.clubbanner || '/images/placeholder-banner.png'
+      clubbanner: req.body.clubbanner || '/images/placeholder-banner.png',
+      bigdescription: req.body.bigdescription,
     }, {
       where: { id: req.params.id }
     });
@@ -266,9 +271,7 @@ router.post('/registeruser', addUserToViews, async function (req, res) {
       password: md5(req.body.password),
       ufirstname: req.body.ufirstname,
       ulastname: req.body.ulastname,
-      student: student,
-      officer: officer,
-      admin: false
+      role: req.body.role,
     });
 
     res.redirect('/');
@@ -322,6 +325,12 @@ function requireLogin(req, res, next) {
   next();
 }
 
+function requireOfficerOrAdmin(req, res, next) {
+  if (req.user.admin || req.user.officer) {
+    return next();
+  }
+  res.redirect('/');
+}
 
 module.exports = router;
 

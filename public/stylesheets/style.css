@@ -995,3 +995,8 @@ nav.main-nav a:hover {
   color: darkred;
   font-weight: bold;
 }
+
+.loginfor {
+  text-align: center;
+  color: #555;
+}

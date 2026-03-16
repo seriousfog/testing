@@ -14,9 +14,12 @@ async function authenticate (username, password, done) {
     }
     return done(null, {
         id: user.id,
-        username: user.email,
-        displayName: user.ufirstname
-    })
+        email: user.email,
+        displayName: user.ufirstname,
+        officer: user.officer,
+        admin: user.admin,
+        student: user.student
+    });
 }
 
 const validationStrategy = new Strategy({
@@ -29,13 +32,17 @@ passport.use(validationStrategy);
 
 passport.serializeUser(function(user, cb) {
     process.nextTick(function() {
-        cb(null, {id: user.id, username: user.email, displayName: user.displayName})
+        passport.serializeUser(function(user, cb) {
+            process.nextTick(function() {
+                cb(null, user);
+            });
+        });
     });
 });
 
-passport.deserializeUser(async function(user, cb) {
+passport.deserializeUser(function(user, cb) {
     process.nextTick(function() {
-        return cb(null, user);
+        cb(null, user);
     });
 });
 

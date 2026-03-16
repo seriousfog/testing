@@ -22,21 +22,24 @@ block content
 
         .club-officers-section
             h2 Meet the Officers
-            .club-officers-grid
-                if club.officers && club.officers !== 'No officers listed' && club.officers !== 'See details page'
-                    each officer in club.officers.split(', ')
+            if user
+                .club-officers-grid
+                    if club.officers && club.officers !== 'No officers listed' && club.officers !== 'See details page'
+                        each officer in club.officers.split(', ')
+                            .club-officer-card
+                                img(src=officer.officerimage, alt="Officer" + ' Image')
+                                p= officer
+                    else
                         .club-officer-card
-                            img(src=officer.officerimage, alt="Officer" + ' Image')
-                            p= officer
-                else
-                    .club-officer-card
-                        img(src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png", alt="No officer")
-                        p No officers listed yet
+                            img(src="https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png", alt="No officer")
+                            p No officers listed yet
+            else
+                p.loginfor Please Login 😢
 
         .club-info-sections
             .club-info-block
                 h3 What is this Activity?
-                p= club.shortDesc || 'No description available.'
+                p= club.bigDesc || 'No description available.'
 
             .club-info-block
                 h3 What makes this Activity unique?
@@ -49,8 +52,8 @@ block content
         .club-admin-actions
             a.back-button(href="/") Back
 
-            if user && (user.admin || (user.officer && user.clubin === club.id))
+            if user && (user.role == "admin" || (user.role == "officer" && user.clubin === club.id))
                 a(href="/clubs/" + club.id + "/edit") Edit Club
-            if user && (user.admin)
+            if user && (user.role == "admin")
                 form(action="/clubs/" + club.id + "/delete", method="POST", style="display: inline;")
                     button(type="submit", onclick="return confirm('Are you sure you want to delete this club?')") Delete Club
