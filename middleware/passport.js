@@ -13,11 +13,14 @@ async function authenticate (username, password, done) {
         return done(null, false, {message: 'Incorrect email or password.'});
     }
     return done(null, {
-        id: user.id,
-        username: user.email,
-        displayName: user.ufirstname
-    })
-}
+          id: user.id,
+          email: user.email,
+          displayName: user.ufirstname,
+          officer: user.officer,
+          admin: user.admin,
+          student: user.student
+        });
+    }
 
 const validationStrategy = new Strategy({
         usernameField: 'email',
