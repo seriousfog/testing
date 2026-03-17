@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    if user && (user.role == "officer" || user.role == "admin")
+    if user && (user.role === "teacher" || user.role === "admin")
         .main-content
             h1 Register Club Officer
 
@@ -30,7 +30,6 @@ block content
                         option(value="Treasurer") Treasurer
                         option(value="Activities Director") Activities Director
                         option(value="Historian") Historian
-                        option(value="Member") Member
 
                 .input-container
                     label.form-label Student ID:
@@ -46,17 +45,11 @@ block content
                         option(value="12") 12th
 
                 .input-container
-                    label.form-label Username:
-                    input(type="text", name="officerusername")
-
-                .input-container
-                    label.form-label Password:
-                    input(type="password", name="officerpassword")
-
-                .input-container
                     label.form-label Officer Image URL:
                     input(type="text", name="officerimage")
 
                 .club-create-form-button
                     button(type="submit") Register Officer
                     a.button-cancel(href="/") Cancel
+            if error
+                p.error=error

@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    if user && (user.role == "officer" || user.role == "admin")
+    if user && (user.role === "teacher" || user.role === "admin")
         .main-content
             h1 Create New Club
 
@@ -61,7 +61,7 @@ block content
                     textarea(name="smalldescription", rows="3")
 
                 .input-container
-                    label.form-label Short Description:
+                    label.form-label Big Description:
                     textarea(name="bigdescription", rows="3")
 
                 .input-container

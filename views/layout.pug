@@ -12,11 +12,11 @@ html
             img(src="/images/Edison.png", alt="Logo")
         nav.main-nav
           a(href="/") Home
-          if user && (user.role == "officer" || user.role == "admin")
+          if user && (user.role === "teacher" || user.role === "admin")
             a(href="/clubcreate") Create Club
             a(href="/registerofficer") Add Officer
           if user
-            p.displayname #{user.displayName}
+            p.displayname #{user.ufirstname}
             a(href="/logout") Logout
           else
             a(href="/registeruser") Register User

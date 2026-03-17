@@ -80,17 +80,15 @@ router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
   }
 });
 
-// SHINE'S FORM ROUTES
-
 // GET club creation form
 router.get('/clubcreate', requireLogin, requireOfficerOrAdmin, addUserToViews, function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
-// POST new club - handles form submission
+// POST new club
 router.post('/clubs', addUserToViews, async function(req, res) {
   try {
-    console.log('Form data received:', req.body); // Debug: see what data is coming in
+    console.log('Form data received:', req.body);
 
     const newClub = await Club.create({
       clubname: req.body.clubname,
@@ -107,10 +105,10 @@ router.post('/clubs', addUserToViews, async function(req, res) {
       bigdescription: req.body.bigdescription,
     });
 
-    console.log('Club created successfully:', newClub.id); // Debug: success
+    console.log('Club created successfully:', newClub.id);
     res.redirect('/clubs/' + newClub.id);
   } catch (error) {
-    console.error('FULL ERROR:', error); // Debug: see full error object
+    console.error('FULL ERROR:', error);
     console.error('Error name:', error.name);
     console.error('Error message:', error.message);
     if (error.errors) {
@@ -120,7 +118,7 @@ router.post('/clubs', addUserToViews, async function(req, res) {
     res.render('club-create', {
       title: 'Create New Club',
       error: 'Failed to create club: ' + error.message,
-      formData: req.body // Send back the form data so user doesn't lose it
+      formData: req.body
     });
   }
 });
@@ -140,8 +138,6 @@ router.post('/officers', addUserToViews, async function(req, res) {
       clubin: req.body.clubin,
       officerstudentid: req.body.officerstudentid,
       officergradelevel: req.body.officergradelevel,
-      officerusername: req.body.officerusername,
-      officerpassword: req.body.officerpassword,
       officerimage: req.body.officerimage
     });
 
@@ -263,8 +259,6 @@ router.post('/registeruser', addUserToViews, async function (req, res) {
         error: 'Email already registered'
       });
     }
-    const student = req.body.student === 'true';
-    const officer = req.body.officer === 'true';
 
     await User.create({
       email: req.body.email,
@@ -292,7 +286,7 @@ const passport = require('passport');
 router.post('/login', addUserToViews, passport.authenticate('local', {
       successRedirect: '/',
       failureRedirect: '/login',
-      failureMessage: true
+      failureMessage: 'Username or password incorrect'
     })
 );
 
@@ -301,7 +295,9 @@ router.get('/login', addUserToViews, function (req, res) {
 });
 
 module.exports.logout = function (req, res) {
-  req.logout();
+  req.logout(function(err) {
+    if (err) { return next(err); }
+  });
   res.redirect('/login');
 }
 
@@ -333,26 +329,3 @@ function requireOfficerOrAdmin(req, res, next) {
 }
 
 module.exports = router;
-
-// const { club, officer } = require('../models');
-//
-// async function requireClubPermission(req, res, next) {
-//   if (!req.user) return res.redirect('/login');
-//
-//   const club = await Club.findByPk(req.params.id);
-//   if (!club) return res.status(404).send('Club not found');
-//
-//   if (req.user.admin) {
-//     req.club = club;
-//     return next();
-//   }
-//
-//   if (req.user.officer && req.user.clubin === club.id) {
-//     req.club = club;
-//     return next();
-//   }
-//
-//   res.status(403).send('Forbidden');
-// }
-//
-// module.exports = { requireClubPermission };
