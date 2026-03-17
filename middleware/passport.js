@@ -16,9 +16,7 @@ async function authenticate (username, password, done) {
         id: user.id,
         email: user.email,
         displayName: user.ufirstname,
-        officer: user.officer,
-        admin: user.admin,
-        student: user.student
+        role: user.role
     });
 }
 
@@ -31,19 +29,18 @@ const validationStrategy = new Strategy({
 passport.use(validationStrategy);
 
 passport.serializeUser(function(user, cb) {
-    process.nextTick(function() {
-        passport.serializeUser(function(user, cb) {
-            process.nextTick(function() {
-                cb(null, user);
-            });
-        });
-    });
+  cb(null, user.id);
 });
 
-passport.deserializeUser(function(user, cb) {
-    process.nextTick(function() {
-        cb(null, user);
-    });
+passport.deserializeUser(async function(id, cb) {
+
+  try {
+    const user = await User.findByPk(id);
+    cb(null, user);
+  } catch (err) {
+    cb(err);
+  }
+
 });
 
 module.exports.passport = passport;
