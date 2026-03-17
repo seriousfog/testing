@@ -18,6 +18,7 @@ async function authenticate (username, password, done) {
         displayName: user.ufirstname,
         role: user.role
     });
+    // return done(null, user);
 }
 
 const validationStrategy = new Strategy({
