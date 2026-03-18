@@ -289,27 +289,6 @@ router.post('/login', addUserToViews, passport.authenticate('local', {
       failureMessage: true
     })
 );
-// router.post('/login', function(req, res, next) {
-
-//   passport.authenticate('local', function(err, user, info) {
-
-//     if (err) return next(err);
-
-//     if (!user) {
-//       return res.render('login', {
-//         title: 'Login User',
-//         error: info.message
-//       });
-//     }
-
-//     req.logIn(user, function(err) {
-//       if (err) return next(err);
-//       return res.redirect('/');
-//     });
-
-//   })(req, res, next);
-
-// });
 
 router.get('/login', addUserToViews, function (req, res) {
   res.render('login', { title: 'Login User' });
