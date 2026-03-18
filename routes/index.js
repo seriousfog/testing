@@ -286,7 +286,7 @@ const passport = require('passport');
 router.post('/login', addUserToViews, passport.authenticate('local', {
       successRedirect: '/',
       failureRedirect: '/login',
-      failureMessage: 'Username or password incorrect'
+      failureMessage: true
     })
 );
 // router.post('/login', function(req, res, next) {
