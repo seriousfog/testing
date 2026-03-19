@@ -23,7 +23,7 @@ block content
             h2= club.name
             p Location: #{club.location || 'TBD'}
             p Meeting: #{club.meeting}
-            p.short= club.shortDesc
+            p.big= club.bigDesc
             p Commitment: #{club.commitment || 'TBD'}
             p Advisor: #{club.advisor || 'TBD'}
             p Officers: #{club.officers || 'TBD'}
@@ -38,7 +38,7 @@ block content
     .modal-content
       span#close-btn &times;
       h2#modal-name Club Name
-      p#modal-shortdesc Description
+      p#modal-bigdesc Description
       p#modal-location Location:
       p#modal-meeting Meeting:
       p#modal-commitment Commitment:

@@ -114,7 +114,6 @@ router.post('/clubs', addUserToViews, async function(req, res) {
     if (error.errors) {
       console.error('Validation errors:', error.errors.map(e => e.message));
     }
-
     res.render('club-create', {
       title: 'Create New Club',
       error: 'Failed to create club: ' + error.message,
@@ -129,18 +128,17 @@ router.get('/registerofficer', requireLogin, addUserToViews, function(req, res) 
 });
 
 // POST new officer
-router.post('/officers', addUserToViews, async function(req, res) {
+router.post('/officers', addUserToViews, requireLogin, async function(req, res) {
   try {
     await Officer.create({
-      officertitle: req.body.officertitle,
+      clubin: req.body.clubin,
       officerfirstname: req.body.officerfirstname,
       officerlastname: req.body.officerlastname,
-      clubin: req.body.clubin,
+      officertitle: req.body.officertitle,
       officerstudentid: req.body.officerstudentid,
       officergradelevel: req.body.officergradelevel,
       officerimage: req.body.officerimage
     });
-
     res.redirect('/');
   } catch (error) {
     console.error('Error creating officer:', error);
@@ -283,12 +281,21 @@ router.post('/registeruser', addUserToViews, async function (req, res) {
 const passport = require('passport');
 
 
-router.post('/login', addUserToViews, passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureMessage: true
-    })
-);
+router.post('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) return next(err);
+        if (!user) {
+            return res.render('login', {
+                title: 'Login User',
+                error: 'Incorrect email or password'
+            });
+        }
+        req.login(user, function(err) {
+            if (err) return next(err);
+            return res.redirect('/');
+        });
+    })(req, res, next);
+});
 
 router.get('/login', addUserToViews, function (req, res) {
   res.render('login', { title: 'Login User' });
