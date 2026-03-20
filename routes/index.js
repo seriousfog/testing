@@ -81,7 +81,7 @@ router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
 });
 
 // GET club creation form
-router.get('/clubcreate', requireLogin, requireOfficerOrAdmin, addUserToViews, function(req, res) {
+router.get('/clubcreate', requireLogin, addUserToViews, function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
@@ -326,13 +326,6 @@ function requireLogin(req, res, next) {
     return res.redirect('/login');
   }
   next();
-}
-
-function requireOfficerOrAdmin(req, res, next) {
-  if (req.user.admin || req.user.officer) {
-    return next();
-  }
-  res.redirect('/');
 }
 
 module.exports = router;
