@@ -56,6 +56,10 @@ block content
                     option(value="High", selected=club.commitment==='High') High
 
             .input-container
+                label.form-label Instagram Link:
+                input(type="text", name="clubinstagram" value=club.clubinstagram)
+
+            .input-container
                 label.form-label Short Description:
                 textarea(name="smalldescription", rows="3")= club.smalldescription
 

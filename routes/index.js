@@ -103,6 +103,7 @@ router.post('/clubs', addUserToViews, async function(req, res) {
       clublogo: req.body.clublogo || 'placeholder.jpg',
       clubbanner: req.body.clubbanner || '/images/placeholder-banner.png',
       bigdescription: req.body.bigdescription,
+      clubinstagram: req.body.clubinstagram,
     });
 
     console.log('Club created successfully:', newClub.id);
@@ -181,6 +182,7 @@ router.get('/search', addUserToViews, async function(req, res) {
         logo: club.clublogo || '/images/placeholder-logo.png',
         category: club.category,
         bigDescription: club.bigdescription,
+        clubinstagram: club.clubinstagram,
       })),
       searchQuery: query
     });
@@ -217,6 +219,7 @@ router.post('/clubs/:id/edit', addUserToViews, async function(req, res) {
       clublogo: req.body.clublogo || 'placeholder.jpg',
       clubbanner: req.body.clubbanner || '/images/placeholder-banner.png',
       bigdescription: req.body.bigdescription,
+      clubinstagram: club.clubinstagram,
     }, {
       where: { id: req.params.id }
     });
@@ -246,7 +249,6 @@ router.get('/registeruser', addUserToViews, function(req, res) {
 
 router.post('/registeruser', addUserToViews, async function (req, res) {
   try {
-
     const existingUser = await User.findOne({
       where: { email: req.body.email }
     });
@@ -257,7 +259,6 @@ router.post('/registeruser', addUserToViews, async function (req, res) {
         error: 'Email already registered'
       });
     }
-
     await User.create({
       email: req.body.email,
       password: md5(req.body.password),
@@ -265,12 +266,9 @@ router.post('/registeruser', addUserToViews, async function (req, res) {
       ulastname: req.body.ulastname,
       role: req.body.role,
     });
-
     res.redirect('/');
-
   } catch (error) {
     console.error('Error creating user:', error);
-
     res.render('register-user', {
       title: 'Register User',
       error: 'Failed to register user: ' + error.message
