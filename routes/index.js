@@ -137,7 +137,7 @@ router.post('/officers', addUserToViews, requireLogin, async function(req, res) 
       officertitle: req.body.officertitle,
       officerstudentid: req.body.officerstudentid,
       officergradelevel: req.body.officergradelevel,
-      officerimage: req.body.officerimage
+      officerimage: req.body.officerimage || 'https://static.vecteezy.com/system/resources/thumbnails/020/911/740/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png',
     });
     res.redirect('/');
   } catch (error) {
