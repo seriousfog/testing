@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
         uniquedescription: DataTypes.TEXT,
         clubbanner: DataTypes.STRING,
         user_id: DataTypes.INTEGER,
-        bigdescription: DataTypes.STRING
+        bigdescription: DataTypes.STRING,
+        clubinstagram: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'Club',

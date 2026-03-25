@@ -68,6 +68,7 @@ router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
       logo: club.clublogo || '/images/placeholder-logo.png',
       category: club.category,
       bigDesc: club.bigdescription,
+      clubinstagram: club.clubinstagram,
     };
 
     res.render('club', {
