@@ -1,79 +1,80 @@
 extends layout
 
 block content
-    .main-content
-        h1 Edit Club: #{club.clubname}
+    if user && (user.role === "admin" || (user.role === "officer" && user.clubin === club.id || user.role === "teacher"))
+        .main-content
+            h1 Edit Club: #{club.clubname}
 
-        form.content-form(action="/clubs/" + club.id + "/edit", method="POST")
-            .form-header Club Information
+            form.content-form(action="/clubs/" + club.id + "/edit", method="POST")
+                .form-header Club Information
 
-            .input-container
-                label.form-label Club Name:
-                input(type="text", name="clubname", value=club.clubname, required)
+                .input-container
+                    label.form-label Club Name:
+                    input(type="text", name="clubname", value=club.clubname, required)
 
-            .input-container
-                label.form-label Club Logo:
-                input(type="text", name="clublogo", value=club.clublogo)
+                .input-container
+                    label.form-label Club Logo:
+                    input(type="text", name="clublogo", value=club.clublogo)
 
-            .input-container
-                label.form-label Club Banner:
-                input(type="text", name="clubbanner", value=club.clubbanner)
+                .input-container
+                    label.form-label Club Banner:
+                    input(type="text", name="clubbanner", value=club.clubbanner)
 
-            .input-container
-                label.form-label Advisor First Name:
-                input(type="text", name="advisorfirstname", value=club.advisorfirstname)
+                .input-container
+                    label.form-label Advisor First Name:
+                    input(type="text", name="advisorfirstname", value=club.advisorfirstname)
 
-            .input-container
-                label.form-label Advisor Last Name:
-                input(type="text", name="advisorlastname", value=club.advisorlastname)
+                .input-container
+                    label.form-label Advisor Last Name:
+                    input(type="text", name="advisorlastname", value=club.advisorlastname)
 
-            .input-container
-                label.form-label Meeting Date/Time:
-                input(type="text", name="meetingdate", value=club.meetingdate)
+                .input-container
+                    label.form-label Meeting Date/Time:
+                    input(type="text", name="meetingdate", value=club.meetingdate)
 
-            .input-container
-                label.form-label Room Number:
-                input(type="text", name="clubroomnumber", value=club.clubroomnumber)
+                .input-container
+                    label.form-label Room Number:
+                    input(type="text", name="clubroomnumber", value=club.clubroomnumber)
 
-            .input-container
-                label.form-label Category:
-                select(name="category")
-                    option(value="") Select Category
-                    option(value="Academic", selected=club.category==='Academic') Academic
-                    option(value="Arts", selected=club.category==='Arts') Arts
-                    option(value="Culture", selected=club.category==='Culture') Culture
-                    option(value="Entertainment", selected=club.category==='Entertainment') Entertainment
-                    option(value="Health", selected=club.category==='Health') Health
-                    option(value="Leadership", selected=club.category==='Leadership') Leadership
-                    option(value="Sports", selected=club.category==='Sports') Sports
-                    option(value="STEM", selected=club.category==='STEM') STEM
+                .input-container
+                    label.form-label Category:
+                    select(name="category")
+                        option(value="") Select Category
+                        option(value="Academic", selected=club.category==='Academic') Academic
+                        option(value="Arts", selected=club.category==='Arts') Arts
+                        option(value="Culture", selected=club.category==='Culture') Culture
+                        option(value="Entertainment", selected=club.category==='Entertainment') Entertainment
+                        option(value="Health", selected=club.category==='Health') Health
+                        option(value="Leadership", selected=club.category==='Leadership') Leadership
+                        option(value="Sports", selected=club.category==='Sports') Sports
+                        option(value="STEM", selected=club.category==='STEM') STEM
 
-            .input-container
-                label.form-label Commitment:
-                select(name="commitment")
-                    option(value="Low", selected=club.commitment==='Low') Low
-                    option(value="Medium", selected=club.commitment==='Medium') Medium
-                    option(value="High", selected=club.commitment==='High') High
+                .input-container
+                    label.form-label Commitment:
+                    select(name="commitment")
+                        option(value="Low", selected=club.commitment==='Low') Low
+                        option(value="Medium", selected=club.commitment==='Medium') Medium
+                        option(value="High", selected=club.commitment==='High') High
 
-            .input-container
-                label.form-label Instagram Link:
-                input(type="text", name="clubinstagram" value=club.clubinstagram)
+                .input-container
+                    label.form-label Instagram Link:
+                    input(type="text", name="clubinstagram" value=club.clubinstagram)
 
-            .input-container
-                label.form-label Short Description:
-                textarea(name="smalldescription", rows="3")= club.smalldescription
+                .input-container
+                    label.form-label Short Description:
+                    textarea(name="smalldescription", rows="3")= club.smalldescription
 
-            .input-container
-                label.form-label Big Description:
-                textarea(name="bigdescription", rows="3")= club.bigdescription
+                .input-container
+                    label.form-label Big Description:
+                    textarea(name="bigdescription", rows="3")= club.bigdescription
 
-            .input-container
-                label.form-label Unique Description:
-                textarea(name="uniquedescription", rows="3")= club.uniquedescription
+                .input-container
+                    label.form-label Unique Description:
+                    textarea(name="uniquedescription", rows="3")= club.uniquedescription
 
-            .club-create-form-button
-                button(type="submit") Save Changes
-                a.button-cancel(href="/clubs/" + club.id) Cancel
+                .club-create-form-button
+                    button(type="submit") Save Changes
+                    a.button-cancel(href="/clubs/" + club.id) Cancel
 
-        form(action="/clubs/" + club.id + "/delete", method="POST", style="margin-top: 20px;")
-            button(type="submit", style="background-color: #dc3545;") Delete Club
+            form(action="/clubs/" + club.id + "/delete", method="POST", style="margin-top: 20px;")
+                button(type="submit", style="background-color: #dc3545;") Delete Club

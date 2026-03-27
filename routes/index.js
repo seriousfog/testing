@@ -82,12 +82,12 @@ router.get('/clubs/:id', addUserToViews, async function(req, res, next) {
 });
 
 // GET club creation form
-router.get('/clubcreate', requireLogin, addUserToViews, function(req, res) {
+router.get('/clubcreate', addUserToViews, requireLogin, noStudent, noOfficer, teacherPermissions, adminPermissions, function(req, res) {
   res.render('club-create', { title: 'Create New Club' });
 });
 
 // POST new club
-router.post('/clubs', addUserToViews, async function(req, res) {
+router.post('/clubs', addUserToViews, noStudent, noOfficer, teacherPermissions, adminPermissions, async function(req, res) {
   try {
     console.log('Form data received:', req.body);
 
@@ -125,12 +125,12 @@ router.post('/clubs', addUserToViews, async function(req, res) {
 });
 
 // GET officer registration form
-router.get('/registerofficer', requireLogin, addUserToViews, function(req, res) {
+router.get('/registerofficer', requireLogin, addUserToViews, noStudent, noOfficer, teacherPermissions, adminPermissions, function(req, res) {
   res.render('register-officer', { title: 'Register Officer' });
 });
 
 // POST new officer
-router.post('/officers', addUserToViews, requireLogin, async function(req, res) {
+router.post('/officers', addUserToViews, noStudent, teacherPermissions, adminPermissions, async function(req, res) {
   try {
     await Officer.create({
       clubin: req.body.clubin,
@@ -194,7 +194,7 @@ router.get('/search', addUserToViews, async function(req, res) {
 });
 
 // GET edit club form
-router.get('/clubs/:id/edit', addUserToViews, async function(req, res) {
+router.get('/clubs/:id/edit', addUserToViews, requireLogin, noStudent, officerPermissions, teacherPermissions, adminPermissions, async function(req, res) {
   try {
     const club = await Club.findByPk(req.params.id);
     if (!club) return res.status(404).send('Club not found');
@@ -205,7 +205,7 @@ router.get('/clubs/:id/edit', addUserToViews, async function(req, res) {
 });
 
 // POST update club
-router.post('/clubs/:id/edit', addUserToViews, async function(req, res) {
+router.post('/clubs/:id/edit', addUserToViews, noStudent, officerPermissions, teacherPermissions, adminPermissions, async function(req, res) {
   try {
     await Club.update({
       clubname: req.body.clubname,
@@ -232,7 +232,7 @@ router.post('/clubs/:id/edit', addUserToViews, async function(req, res) {
 });
 
 // POST delete club
-router.post('/clubs/:id/delete', addUserToViews, async function(req, res) {
+router.post('/clubs/:id/delete', addUserToViews, noStudent, adminPermissions, async function(req, res) {
   try {
     await Club.destroy({ where: { id: req.params.id } });
     res.redirect('/');
@@ -244,11 +244,11 @@ router.post('/clubs/:id/delete', addUserToViews, async function(req, res) {
 
 const md5 = require('md5');
 
-router.get('/registeruser', addUserToViews, function(req, res) {
+router.get('/registeruser', addUserToViews, noStudent, noOfficer, function(req, res) {
   res.render('register-user', { title: 'Register User' });
 });
 
-router.post('/registeruser', addUserToViews, async function (req, res) {
+router.post('/registeruser', addUserToViews, noStudent, noOfficer, async function (req, res) {
   try {
     const existingUser = await User.findOne({
       where: { email: req.body.email }
@@ -327,4 +327,38 @@ function requireLogin(req, res, next) {
   next();
 }
 
+function adminPermissions(req, res, next) {
+  if (!req.user.role === "admin") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function teacherPermissions(req, res, next) {
+  if (!req.user.role === "teacher") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function officerPermissions(req, res, next) {
+  if (!req.user.role === "officer") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function noOfficer(req, res, next) {
+  if (req.user.role === "officer") {
+    return res.redirect('/');
+  }
+  next();
+}
+
+function noStudent(req, res, next) {
+  if (req.user.role === "student") {
+    return res.redirect('/');
+  }
+  next();
+}
 module.exports = router;
