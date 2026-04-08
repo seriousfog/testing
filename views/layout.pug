@@ -16,7 +16,7 @@ html
             a(href="/clubcreate") Create Club
             a(href="/registerofficer") Add Officer
           if user
-            p.displayname  | #{user.ufirstname} |
+            p.displayname  | #{user.role} - #{user.ufirstname} |
             a(href="/logout") Logout
           else
             a(href="/registeruser") Register User
