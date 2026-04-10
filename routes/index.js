@@ -125,7 +125,7 @@ router.post('/clubs', addUserToViews, noStudent, noOfficer, teacherPermissions, 
 });
 
 // GET officer registration form
-router.get('/registerofficer', requireLogin, addUserToViews, noStudent, noOfficer, teacherPermissions, adminPermissions, function(req, res) {
+router.get('/registerofficer', addUserToViews, requireLogin, noStudent, noOfficer, teacherPermissions, adminPermissions, function(req, res) {
   res.render('register-officer', { title: 'Register Officer' });
 });
 
